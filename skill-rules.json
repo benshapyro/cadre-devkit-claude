@@ -1,0 +1,258 @@
+{
+  "version": "1.0",
+  "skills": {
+    "test-generator": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "test",
+          "testing",
+          "jest",
+          "pytest",
+          "unit test",
+          "test case",
+          "test coverage",
+          "mock",
+          "fixture"
+        ],
+        "intentPatterns": [
+          "write.*test",
+          "add.*test",
+          "create.*test",
+          "generate.*test",
+          "need.*test"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/__tests__/**/*.ts",
+          "**/__tests__/**/*.tsx",
+          "**/tests/**/*.py",
+          "**/*.test.ts",
+          "**/*.test.tsx",
+          "**/test_*.py"
+        ],
+        "contentPatterns": [
+          "describe\\(",
+          "it\\(",
+          "expect\\(",
+          "pytest",
+          "@pytest",
+          "jest\\.mock"
+        ]
+      }
+    },
+    "code-formatter": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": [
+          "format",
+          "formatting",
+          "lint",
+          "linting",
+          "style",
+          "prettier",
+          "eslint",
+          "black",
+          "isort"
+        ],
+        "intentPatterns": [
+          "format.*code",
+          "fix.*style",
+          "fix.*lint",
+          "clean.*up"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/.eslintrc*",
+          "**/.prettierrc*",
+          "**/pyproject.toml"
+        ],
+        "contentPatterns": []
+      }
+    },
+    "api-design-patterns": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "API",
+          "endpoint",
+          "REST",
+          "GraphQL",
+          "route",
+          "controller",
+          "handler",
+          "middleware"
+        ],
+        "intentPatterns": [
+          "create.*api",
+          "add.*endpoint",
+          "design.*api",
+          "implement.*route",
+          "build.*api"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/routes/**/*.ts",
+          "**/routes/**/*.py",
+          "**/controllers/**/*.ts",
+          "**/api/**/*.ts",
+          "**/api/**/*.py"
+        ],
+        "contentPatterns": [
+          "router\\.",
+          "app\\.get\\(",
+          "app\\.post\\(",
+          "@app\\.route",
+          "@router\\."
+        ]
+      }
+    },
+    "error-handler": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "error",
+          "exception",
+          "try catch",
+          "error handling",
+          "throw",
+          "catch",
+          "finally"
+        ],
+        "intentPatterns": [
+          "handle.*error",
+          "add.*error.*handling",
+          "catch.*exception",
+          "implement.*error"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/errors/**/*.ts",
+          "**/exceptions/**/*.py",
+          "**/middleware/error*.ts"
+        ],
+        "contentPatterns": [
+          "catch\\s*\\(",
+          "throw\\s+new",
+          "raise\\s+",
+          "except\\s+",
+          "try\\s*\\{"
+        ]
+      }
+    },
+    "documentation-templates": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": [
+          "documentation",
+          "docs",
+          "README",
+          "comment",
+          "docstring",
+          "JSDoc",
+          "API docs"
+        ],
+        "intentPatterns": [
+          "write.*documentation",
+          "create.*readme",
+          "add.*docs",
+          "document.*code",
+          "generate.*docs"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/README.md",
+          "**/docs/**/*.md",
+          "**/CHANGELOG.md"
+        ],
+        "contentPatterns": [
+          "/\\*\\*",
+          "\"\"\"",
+          "@param",
+          "@returns",
+          ":param"
+        ]
+      }
+    }
+  },
+  "agents": {
+    "code-reviewer": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["review", "code review", "check code", "review changes"],
+        "intentPatterns": ["review.*code", "check.*changes", "look.*over"]
+      }
+    },
+    "debugger": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["debug", "bug", "error", "fix", "broken", "crash", "exception"],
+        "intentPatterns": ["fix.*bug", "debug.*issue", "find.*error", "why.*not.*work"]
+      }
+    },
+    "refactoring-assistant": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["refactor", "restructure", "extract", "rename", "clean up", "simplify"],
+        "intentPatterns": ["refactor.*code", "extract.*function", "rename.*across", "clean.*up"]
+      }
+    },
+    "performance-optimizer": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["slow", "performance", "speed", "optimize", "fast", "cache", "memory"],
+        "intentPatterns": ["make.*faster", "improve.*performance", "optimize.*code", "reduce.*time"]
+      }
+    },
+    "git-helper": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["git", "commit", "branch", "merge", "rebase", "push", "pull"],
+        "intentPatterns": ["create.*branch", "make.*commit", "merge.*branch"]
+      }
+    },
+    "spec-discovery": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["requirements", "spec", "specification", "clarify", "unclear", "define"],
+        "intentPatterns": ["clarify.*requirements", "define.*spec", "what.*should"]
+      }
+    },
+    "documentation-researcher": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["documentation", "docs", "latest", "current", "official", "api reference", "library", "framework"],
+        "intentPatterns": ["check.*docs", "find.*documentation", "what.*current", "latest.*version", "how.*use"]
+      }
+    }
+  }
+}

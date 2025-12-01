@@ -1,0 +1,39 @@
+{
+  "name": "cadre-devkit-claude",
+  "version": "1.0.0",
+  "description": "Cadre team development kit for Claude Code - ConfidenceChecker, security hooks, auto-activation, and workflow commands",
+  "author": "Cadre Team",
+  "license": "MIT",
+  "keywords": [
+    "productivity",
+    "security",
+    "workflow",
+    "code-review",
+    "testing"
+  ],
+  "components": {
+    "commands": [
+      "./commands/plan.md",
+      "./commands/review.md",
+      "./commands/validate.md",
+      "./commands/ship.md"
+    ],
+    "agents": [
+      "./agents/code-reviewer.md",
+      "./agents/debugger.md",
+      "./agents/spec-discovery.md",
+      "./agents/git-helper.md",
+      "./agents/documentation-researcher.md",
+      "./agents/refactoring-assistant.md",
+      "./agents/performance-optimizer.md"
+    ],
+    "skills": [
+      "./skills/api-design-patterns",
+      "./skills/code-formatter",
+      "./skills/documentation-templates",
+      "./skills/error-handler",
+      "./skills/test-generator"
+    ],
+    "hooks": "./hooks/hooks.json"
+  }
+}

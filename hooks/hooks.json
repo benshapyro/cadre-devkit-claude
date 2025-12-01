@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "command": "./hooks/skill-activation-prompt.sh",
+        "description": "Suggests relevant skills and agents based on user prompts"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "command": "./hooks/security/dangerous-command-blocker.py",
+        "description": "Blocks dangerous shell commands (rm -rf /, force push, etc.)"
+      },
+      {
+        "matcher": "Edit|Write|Read",
+        "command": "./hooks/security/sensitive-file-guard.py",
+        "description": "Prevents access to sensitive files (.env, credentials, SSH keys)"
+      }
+    ]
+  }
+}
