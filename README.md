@@ -2,21 +2,52 @@
 
 A comprehensive development toolkit for Claude Code that enforces quality standards, provides security guardrails, and streamlines workflows.
 
+**New to the DevKit?** Start with the [Getting Started Guide](docs/getting-started.md).
+
 ## Installation
 
 ```bash
-/plugin install github:yourorg/cadre-devkit-claude
+/plugin install github:benshapyro/cadre-devkit-claude
 ```
 
-## Features
+## What's Included
+
+| Component | Count | Description |
+|-----------|-------|-------------|
+| **Commands** | 4 | `/plan`, `/review`, `/validate`, `/ship` |
+| **Skills** | 5 | API design, formatting, docs, errors, testing |
+| **Agents** | 7 | Code review, debugging, refactoring, and more |
+| **Hooks** | 3 | Security guards + skill auto-activation |
+
+## Quick Start
+
+```
+/plan add user authentication    # Plan the feature
+[implement with Claude's help]   # Build it
+/review                          # Review your code
+/validate                        # Run all checks
+/ship                           # Commit with proper format
+```
+
+## Documentation
+
+| Doc | What's In It |
+|-----|--------------|
+| [Getting Started](docs/getting-started.md) | Plain English intro - what this is, why use it, how it works |
+| [Components](docs/components.md) | Detailed explanation of every command, skill, agent, and hook |
+| [Customization](docs/customization.md) | How to tweak settings, add keywords, modify blocked commands |
+| [FAQ](docs/faq.md) | Common questions and troubleshooting |
+| [Changelog](CHANGELOG.md) | Version history and what's changed |
+
+## Features at a Glance
 
 ### Quality Gates
-- **ConfidenceChecker** - Pre-implementation validation (5 criteria, 0.0-1.0 scale)
-- **SelfCheck** - Post-implementation verification with evidence
+- **ConfidenceChecker** - Pauses before complex work to verify understanding
+- **SelfCheck** - Validates completed work with evidence
 
 ### Security Hooks
-- **Dangerous Command Blocker** - Prevents destructive commands (`rm -rf /`, force push, etc.)
-- **Sensitive File Guard** - Blocks access to credentials, `.env`, SSH keys
+- **Dangerous Command Blocker** - Prevents `rm -rf /`, force push, etc.
+- **Sensitive File Guard** - Blocks access to `.env`, credentials, SSH keys
 
 ### Workflow Commands
 | Command | Purpose |
@@ -28,39 +59,26 @@ A comprehensive development toolkit for Claude Code that enforces quality standa
 
 ### Skills (Auto-Activate)
 - `api-design-patterns` - REST/GraphQL best practices
-- `code-formatter` - Style guidelines
+- `code-formatter` - Cadre style guidelines
 - `documentation-templates` - README, API docs
 - `error-handler` - Exception handling patterns
 - `test-generator` - Jest/Pytest test creation
 
 ### Agents (Auto-Activate)
 - `code-reviewer` - Code quality review
-- `debugger` - Error analysis
+- `debugger` - Error analysis and root cause identification
 - `spec-discovery` - Requirements clarification
-- `git-helper` - Git workflows
+- `git-helper` - Git workflow assistance
 - `documentation-researcher` - Latest docs lookup
 - `refactoring-assistant` - Safe code restructuring
 - `performance-optimizer` - Performance analysis
 
-## Usage
+## Need Help?
 
-Skills and agents activate automatically based on your prompts. Use the workflow commands for the development lifecycle:
-
-```
-/plan add user authentication
-[implement feature]
-/review
-/validate
-/ship
-```
-
-## Configuration
-
-The plugin uses `skill-rules.json` to determine when to suggest skills and agents based on:
-- Keywords in your prompts
-- Intent patterns (regex matching)
-- File patterns being edited
+1. Check the [FAQ](docs/faq.md)
+2. Read the [Getting Started Guide](docs/getting-started.md)
+3. Ask in the team Slack channel
 
 ## License
 
-MIT
+MIT - See [LICENSE](LICENSE) for details.
