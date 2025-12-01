@@ -1,0 +1,13 @@
+{
+  "name": "cadre-devkit-claude",
+  "owner": {
+    "name": "Cadre Team"
+  },
+  "plugins": [
+    {
+      "name": "cadre-devkit-claude",
+      "source": ".",
+      "description": "Security hooks, workflow automation, and productivity tools for Claude Code"
+    }
+  ]
+}
