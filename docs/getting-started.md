@@ -30,13 +30,26 @@ Out of the box, Claude Code is like a smart assistant who can write code. The De
 
 ## Installation (2 minutes)
 
+### Option 1: Plugin Install (Recommended)
+
 Open Claude Code and run:
 
 ```
-/plugin install github:benshapyro/cadre-devkit-claude
+/plugin marketplace add benshapyro/cadre-devkit-claude
+/plugin install cadre-devkit@cadre-devkit-claude
+```
+
+Or use the one-step CLI helper:
+
+```bash
+npx claude-plugins install @benshapyro/cadre-devkit-claude/cadre-devkit
 ```
 
 That's it. The DevKit is now active.
+
+### Option 2: Manual Install
+
+If plugins aren't working, see the [README](../README.md) for manual setup with `./install.sh`.
 
 ## How to Use It
 

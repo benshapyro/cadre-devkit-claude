@@ -6,9 +6,68 @@ A comprehensive development toolkit for Claude Code that enforces quality standa
 
 ## Installation
 
-```bash
-/plugin install github:benshapyro/cadre-devkit-claude
+### Option 1: Plugin Install (Recommended)
+
+In Claude Code, run:
+
 ```
+/plugin marketplace add benshapyro/cadre-devkit-claude
+/plugin install cadre-devkit@cadre-devkit-claude
+```
+
+Or use the one-step CLI:
+
+```bash
+npx claude-plugins install @benshapyro/cadre-devkit-claude/cadre-devkit
+```
+
+### Option 2: Manual Setup
+
+If plugins aren't working, install manually:
+
+```bash
+# Clone the devkit
+git clone https://github.com/benshapyro/cadre-devkit-claude.git
+cd cadre-devkit-claude
+
+# Run the install script
+./install.sh
+```
+
+The script copies components to `~/.claude/` and shows you how to configure hooks.
+
+### Configure Hooks (Required for Security Features)
+
+After installation, add hooks to your `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/security/dangerous-command-blocker.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/security/sensitive-file-guard.py"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Note:** Plugin install may configure hooks automatically. Check your settings after install.
 
 ## What's Included
 
