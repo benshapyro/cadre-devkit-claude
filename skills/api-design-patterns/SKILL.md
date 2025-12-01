@@ -10,9 +10,9 @@ Best practices for designing RESTful and GraphQL APIs.
 ## Resources
 
 For detailed code examples, see:
-- `resources/express-examples.md` - Node.js + Express patterns
-- `resources/fastapi-examples.md` - FastAPI (Python) patterns
-- `resources/flask-examples.md` - Flask (Python) patterns
+- `references/express-examples.md` - Node.js + Express patterns
+- `references/fastapi-examples.md` - FastAPI (Python) patterns
+- `references/flask-examples.md` - Flask (Python) patterns
 
 ## Core Principles
 

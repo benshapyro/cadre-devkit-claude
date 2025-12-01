@@ -10,8 +10,8 @@ Create clear, maintainable documentation for projects and code.
 ## Resources
 
 For full templates, see:
-- `resources/readme-template.md` - Complete README template
-- `resources/api-docs-template.md` - API documentation template
+- `references/readme-template.md` - Complete README template
+- `references/api-docs-template.md` - API documentation template
 
 ## Core Principles
 
