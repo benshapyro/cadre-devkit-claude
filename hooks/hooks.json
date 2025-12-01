@@ -2,21 +2,33 @@
   "hooks": {
     "UserPromptSubmit": [
       {
-        "matcher": "",
-        "command": "./hooks/skill-activation-prompt.sh",
-        "description": "Suggests relevant skills and agents based on user prompts"
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./hooks/skill-activation-prompt.sh"
+          }
+        ]
       }
     ],
     "PreToolUse": [
       {
         "matcher": "Bash",
-        "command": "./hooks/security/dangerous-command-blocker.py",
-        "description": "Blocks dangerous shell commands (rm -rf /, force push, etc.)"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./hooks/security/dangerous-command-blocker.py"
+          }
+        ]
       },
       {
         "matcher": "Edit|Write|Read",
-        "command": "./hooks/security/sensitive-file-guard.py",
-        "description": "Prevents access to sensitive files (.env, credentials, SSH keys)"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./hooks/security/sensitive-file-guard.py"
+          }
+        ]
       }
     ]
   }
