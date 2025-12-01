@@ -30,6 +30,21 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./hooks/formatting/auto-format.py"
+          },
+          {
+            "type": "command",
+            "command": "./hooks/testing/test-on-change.py"
+          }
+        ]
+      }
     ]
   }
 }
