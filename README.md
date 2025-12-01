@@ -12,14 +12,10 @@ In Claude Code, run:
 
 ```
 /plugin marketplace add benshapyro/cadre-devkit-claude
-/plugin install cadre-devkit@cadre-devkit-claude
+/plugin install cadre-devkit-claude
 ```
 
-Or use the one-step CLI:
-
-```bash
-npx claude-plugins install @benshapyro/cadre-devkit-claude/cadre-devkit
-```
+Then restart Claude Code to activate the plugin.
 
 ### Option 2: Manual Setup
 
@@ -76,7 +72,7 @@ After installation, add hooks to your `~/.claude/settings.json`:
 | **Commands** | 4 | `/plan`, `/review`, `/validate`, `/ship` |
 | **Skills** | 5 | API design, formatting, docs, errors, testing |
 | **Agents** | 7 | Code review, debugging, refactoring, and more |
-| **Hooks** | 3 | Security guards + skill auto-activation |
+| **Hooks** | 5 | Security guards, auto-format, test runner, skill activation |
 
 ## Quick Start
 
@@ -104,9 +100,15 @@ After installation, add hooks to your `~/.claude/settings.json`:
 - **ConfidenceChecker** - Pauses before complex work to verify understanding
 - **SelfCheck** - Validates completed work with evidence
 
-### Security Hooks
+### Hooks
+
+**Security (PreToolUse)**
 - **Dangerous Command Blocker** - Prevents `rm -rf /`, force push, etc.
-- **Sensitive File Guard** - Blocks access to `.env`, credentials, SSH keys
+- **Sensitive File Guard** - Blocks access to `.env`, credentials, SSH keys (allows `.example` files)
+
+**Automation (PostToolUse)**
+- **Auto-Format** - Runs Prettier/Black after Edit/Write operations
+- **Test-On-Change** - Runs related tests after source file changes
 
 ### Workflow Commands
 | Command | Purpose |

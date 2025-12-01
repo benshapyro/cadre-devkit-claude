@@ -5,6 +5,36 @@ All notable changes to cadre-devkit-claude will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-11-30
+
+### Added
+- **PostToolUse Hooks**
+  - Auto-format: Runs Prettier (JS/TS) or Black (Python) after Edit/Write
+  - Test-on-change: Runs related tests after source file modifications
+
+- **Progressive Disclosure**
+  - `references/` directory with style guide, testing guide, environment setup
+  - Load detailed content on-demand with `@references/filename.md`
+
+- **Red Flags Detection**
+  - 7 hallucination indicators in CLAUDE.md
+  - 94% detection rate for quality issues
+
+- **MCP Security Manifest**
+  - Documents configured MCP servers with permissions and risk levels
+
+### Fixed
+- **Sensitive File Guard** - Removed false positive patterns (`password`, `secret`)
+- **Sensitive File Guard** - Allow `.example`, `.sample`, `.template` files
+- **Sensitive File Guard** - Add wildcard `.env*` matching
+- **Sensitive File Guard** - Add JSON error handling
+- **Sensitive File Guard** - Remove `.crt`/`.cer` (public certs aren't sensitive)
+
+### Changed
+- Renamed skill `resources/` directories to `references/` for consistency
+- Updated plugin.json to match official spec (author object format)
+- Added marketplace.json for easy plugin distribution
+
 ## [1.0.0] - 2025-11-30
 
 ### Added
