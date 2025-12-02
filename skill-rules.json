@@ -188,6 +188,107 @@
           ":param"
         ]
       }
+    },
+    "frontend-design": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "design",
+          "UI",
+          "UX",
+          "landing page",
+          "dashboard",
+          "interface",
+          "layout",
+          "visual",
+          "aesthetic",
+          "hero section"
+        ],
+        "intentPatterns": [
+          "create.*ui",
+          "design.*page",
+          "build.*interface",
+          "make.*look",
+          "style.*component"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [],
+        "contentPatterns": []
+      }
+    },
+    "react-patterns": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "react",
+          "component",
+          "hook",
+          "useState",
+          "useEffect",
+          "useContext",
+          "props",
+          "jsx"
+        ],
+        "intentPatterns": [
+          "create.*component",
+          "add.*hook",
+          "build.*react",
+          "implement.*component"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/*.tsx",
+          "**/*.jsx",
+          "**/components/**/*.ts",
+          "**/hooks/**/*.ts"
+        ],
+        "contentPatterns": [
+          "import.*react",
+          "useState\\(",
+          "useEffect\\(",
+          "export.*function.*\\(",
+          "<.*className"
+        ]
+      }
+    },
+    "tailwind-conventions": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": [
+          "tailwind",
+          "className",
+          "styling",
+          "css",
+          "dark mode",
+          "responsive"
+        ],
+        "intentPatterns": [
+          "style.*with.*tailwind",
+          "add.*classes",
+          "make.*responsive",
+          "add.*dark.*mode"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/tailwind.config.*",
+          "**/globals.css"
+        ],
+        "contentPatterns": [
+          "className=",
+          "cn\\(",
+          "clsx\\(",
+          "dark:"
+        ]
+      }
     }
   },
   "agents": {
