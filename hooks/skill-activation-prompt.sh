@@ -48,12 +48,18 @@ INTENT_MATCHED=$(jq -r --arg prompt "$USER_PROMPT_LOWER" '
   "\(.key):\(.value.priority // "medium")"
 ' "$SKILL_RULES" 2>/dev/null)
 
-# Combine and deduplicate matches
-ALL_MATCHED=$(echo -e "$MATCHED_SKILLS\n$INTENT_MATCHED" | sort -u | grep -v '^$')
+# Combine matches and sort by priority (high first), then deduplicate by skill name
+# Format is "skillname:priority" - sort by priority field, keep first occurrence of each skill
+ALL_MATCHED=$(echo -e "$MATCHED_SKILLS\n$INTENT_MATCHED" | grep -v '^$' | \
+    awk -F: '{
+        priority_order = ($2 == "high" ? 1 : ($2 == "medium" ? 2 : 3));
+        print priority_order ":" $0
+    }' | sort -t: -k1,1n | cut -d: -f2- | \
+    awk -F: '!seen[$1]++')
 
 # If we have matches, output skill suggestions
 if [ -n "$ALL_MATCHED" ]; then
-    # Extract just skill names for the message
+    # Extract just skill names for the message (already in priority order)
     SKILL_NAMES=$(echo "$ALL_MATCHED" | cut -d':' -f1 | tr '\n' ', ' | sed 's/,$//')
 
     # Output JSON with skill suggestions

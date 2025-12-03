@@ -1,44 +1,80 @@
 ---
 description: Validate implementation before shipping
-allowed-tools: Bash(npm:*), Bash(pytest:*), Bash(tsc:*), Bash(git:*), Read
+allowed-tools: Bash, Read, Glob
 ---
 
 # Validate Command
 
-Run all validations before shipping code.
+**Purpose:** Quantitative validation - runs automated checks (types, lint, tests, build).
 
-## Validation Steps
+**Distinct from /review:** This command runs automated tooling. Use `/review` first for qualitative code review (style, security, best practices).
 
-### 1. Type Checking
+**Workflow:** `/review` → `/validate` → `/ship`
 
-**TypeScript projects:**
+Run all validations before shipping code. Automatically detects the project's tech stack and runs only relevant checks.
+
+## 1. Detect Tech Stack
+
+First, check which config files exist to determine the project type:
+
+- `package.json` → Node.js/TypeScript project
+- `tsconfig.json` → TypeScript
+- `pyproject.toml` or `requirements.txt` → Python
+- `Cargo.toml` → Rust
+- `go.mod` → Go
+
+Use Glob to check for these files before running language-specific checks.
+
+## 2. Run Relevant Checks
+
+### TypeScript/Node.js (if package.json exists)
+
+**Type checking:**
 !`npx tsc --noEmit 2>&1 || true`
 
-**Python projects:**
-Check for mypy or pyright configuration.
-
-### 2. Linting
-
-**JavaScript/TypeScript:**
+**Linting (if lint script exists):**
 !`npm run lint 2>&1 || true`
 
-**Python:**
-!`ruff check . 2>&1 || true`
-
-### 3. Tests
-
-**Run test suite:**
+**Tests:**
 !`npm test 2>&1 || true`
 
-Or for Python:
-!`pytest -q 2>&1 || true`
-
-### 4. Build Check
-
-**Verify build succeeds:**
+**Build:**
 !`npm run build 2>&1 || true`
 
-### 5. SelfCheck Protocol
+### Python (only if pyproject.toml or requirements.txt exists)
+
+**Linting:**
+!`ruff check . 2>&1 || true`
+
+**Type checking:**
+!`mypy . 2>&1 || true`
+
+**Tests:**
+!`pytest -q 2>&1 || true`
+
+### Rust (only if Cargo.toml exists)
+
+**Check:**
+!`cargo check 2>&1 || true`
+
+**Clippy:**
+!`cargo clippy -- -D warnings 2>&1 || true`
+
+**Tests:**
+!`cargo test 2>&1 || true`
+
+### Go (only if go.mod exists)
+
+**Build:**
+!`go build ./... 2>&1 || true`
+
+**Vet:**
+!`go vet ./... 2>&1 || true`
+
+**Tests:**
+!`go test ./... 2>&1 || true`
+
+## 3. SelfCheck Protocol
 
 Answer these questions with evidence:
 
@@ -63,20 +99,23 @@ Answer these questions with evidence:
 ```
 ## Validation Report
 
+### Tech Stack Detected
+[List detected languages/frameworks]
+
 ### Type Checking
-[✅ Passed / ❌ Failed]
+[✅ Passed / ❌ Failed / ⏭️ Skipped (not applicable)]
 [Details if failed]
 
 ### Linting
-[✅ Passed / ❌ Failed]
+[✅ Passed / ❌ Failed / ⏭️ Skipped (not applicable)]
 [Details if failed]
 
 ### Tests
-[✅ X passed, Y failed / ❌ Failed to run]
+[✅ X passed, Y failed / ❌ Failed to run / ⏭️ Skipped]
 [Failure details if any]
 
 ### Build
-[✅ Passed / ❌ Failed]
+[✅ Passed / ❌ Failed / ⏭️ Skipped (not applicable)]
 [Details if failed]
 
 ### Summary

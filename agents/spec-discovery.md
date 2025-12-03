@@ -1,6 +1,6 @@
 ---
 name: spec-discovery
-description: Clarifies vague requirements by asking probing questions, identifying edge cases, and creating comprehensive specifications. Use before starting implementation on unclear or incomplete requirements.
+description: Clarifies vague requirements by asking probing questions, identifying edge cases, and creating comprehensive specifications. PROACTIVELY use when requirements are vague, ambiguous, or incomplete. Auto-invoke before implementing features that lack clear acceptance criteria.
 tools: Read, Grep, Glob
 model: sonnet
 ---

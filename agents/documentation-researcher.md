@@ -1,6 +1,6 @@
 ---
 name: documentation-researcher
-description: Researches official documentation, latest best practices, and current tech stack information. Use when evaluating libraries, checking API documentation, or verifying current implementation patterns.
+description: Researches official documentation, latest best practices, and current tech stack information. PROACTIVELY use when evaluating libraries, checking API usage, or when implementation involves unfamiliar frameworks. Auto-invoke before using any library/API features from training data.
 tools: WebSearch, WebFetch, mcp__exa__exa_search, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url, Read, Grep
 model: sonnet
 ---

@@ -136,6 +136,137 @@ def test_uppercase(input, expected):
     assert uppercase(input) == expected
 ```
 
+## Async Testing Patterns
+
+### Jest - Async/Await
+```typescript
+describe('async operations', () => {
+  it('should fetch user data', async () => {
+    const user = await fetchUser(1);
+    expect(user.name).toBe('John');
+  });
+
+  it('should handle async errors', async () => {
+    await expect(fetchUser(-1)).rejects.toThrow('Invalid ID');
+  });
+
+  it('should resolve multiple promises', async () => {
+    const [users, posts] = await Promise.all([
+      fetchUsers(),
+      fetchPosts(),
+    ]);
+    expect(users).toHaveLength(10);
+    expect(posts).toHaveLength(5);
+  });
+});
+```
+
+### Jest - Timers and Timeouts
+```typescript
+describe('timer operations', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('should debounce function calls', () => {
+    const callback = jest.fn();
+    const debounced = debounce(callback, 500);
+
+    debounced();
+    debounced();
+    debounced();
+
+    expect(callback).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(500);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should timeout long operations', async () => {
+    const slowOperation = () => new Promise(r => setTimeout(r, 10000));
+
+    await expect(
+      Promise.race([
+        slowOperation(),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Timeout')), 1000)
+        ),
+      ])
+    ).rejects.toThrow('Timeout');
+  });
+});
+```
+
+### React Testing Library - waitFor
+```typescript
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+describe('async component behavior', () => {
+  it('should show loading then data', async () => {
+    render(<UserProfile userId={1} />);
+
+    // Initially shows loading
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+    // Wait for data to appear
+    await waitFor(() => {
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+    });
+
+    // Loading should be gone
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+  });
+
+  it('should handle user interactions', async () => {
+    const user = userEvent.setup();
+    render(<SearchForm />);
+
+    await user.type(screen.getByRole('textbox'), 'search term');
+    await user.click(screen.getByRole('button', { name: 'Search' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Results:')).toBeInTheDocument();
+    }, { timeout: 3000 }); // Custom timeout
+  });
+});
+```
+
+### Pytest - Async Tests
+```python
+import pytest
+import asyncio
+
+@pytest.mark.asyncio
+async def test_async_fetch():
+    result = await fetch_data()
+    assert result is not None
+
+@pytest.mark.asyncio
+async def test_concurrent_operations():
+    results = await asyncio.gather(
+        fetch_users(),
+        fetch_posts(),
+    )
+    assert len(results) == 2
+
+@pytest.mark.asyncio
+async def test_async_timeout():
+    with pytest.raises(asyncio.TimeoutError):
+        await asyncio.wait_for(slow_operation(), timeout=1.0)
+
+# Async fixtures
+@pytest.fixture
+async def async_client():
+    client = await create_async_client()
+    yield client
+    await client.close()
+```
+
 ## Running Tests
 
 Before committing:

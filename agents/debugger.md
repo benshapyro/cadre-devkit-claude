@@ -1,6 +1,6 @@
 ---
 name: debugger
-description: Systematically analyzes errors, stack traces, and logs to identify root causes. Use when facing bugs, exceptions, or unexpected behavior that needs investigation.
+description: Systematically analyzes errors, stack traces, and logs to identify root causes. PROACTIVELY use when user reports bugs, errors, crashes, or unexpected behavior. Auto-invoke when stack traces or error messages appear in conversation.
 tools: Read, Grep, Bash, Glob
 model: sonnet
 ---

@@ -44,7 +44,7 @@ Before writing code, establish:
 - Custom cursors, grain overlays, decorative borders
 - Details should reinforce the chosen aesthetic
 
-## Anti-Patterns (Never Do These)
+## Anti-Patterns
 
 - Generic fonts (Inter, Roboto, Arial on white backgrounds)
 - Purple/blue gradients on white (classic AI startup look)

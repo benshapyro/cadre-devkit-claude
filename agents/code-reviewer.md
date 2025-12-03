@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Reviews code for adherence to Ben's coding standards, best practices, and style guidelines. Use after completing significant code changes or when explicitly requested.
+description: Reviews code for adherence to coding standards, best practices, and style guidelines. PROACTIVELY use after completing any significant code changes (new features, refactors, bug fixes). Auto-invoke when code is ready for review before committing.
 tools: Read, Grep, Glob
 model: sonnet
 ---

@@ -110,6 +110,98 @@ function useAuth() {
 }
 ```
 
+## State Management
+
+### Context + useReducer (Complex Local State)
+```tsx
+// Define action types and state
+type State = { count: number; loading: boolean };
+type Action =
+  | { type: 'increment' }
+  | { type: 'decrement' }
+  | { type: 'setLoading'; payload: boolean };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'increment': return { ...state, count: state.count + 1 };
+    case 'decrement': return { ...state, count: state.count - 1 };
+    case 'setLoading': return { ...state, loading: action.payload };
+  }
+}
+
+// Context provider
+const CounterContext = createContext<{
+  state: State;
+  dispatch: React.Dispatch<Action>;
+} | null>(null);
+
+function CounterProvider({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, { count: 0, loading: false });
+  return (
+    <CounterContext.Provider value={{ state, dispatch }}>
+      {children}
+    </CounterContext.Provider>
+  );
+}
+
+// Custom hook for consuming
+function useCounter() {
+  const context = useContext(CounterContext);
+  if (!context) throw new Error('useCounter must be used within CounterProvider');
+  return context;
+}
+```
+
+### Server State (React Query / TanStack Query)
+```tsx
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+// Fetching data
+function useUsers() {
+  return useQuery({
+    queryKey: ['users'],
+    queryFn: () => fetch('/api/users').then(res => res.json()),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+}
+
+// Mutations with optimistic updates
+function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (user: User) =>
+      fetch(`/api/users/${user.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(user),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+}
+
+// Usage
+function UserList() {
+  const { data: users, isLoading, error } = useUsers();
+  const updateUser = useUpdateUser();
+
+  if (isLoading) return <Spinner />;
+  if (error) return <Error message={error.message} />;
+
+  return (/* render users */);
+}
+```
+
+### When to Use What
+| Scenario | Solution |
+|----------|----------|
+| Simple component state | `useState` |
+| Complex state with many actions | `useReducer` |
+| State shared across components | Context + `useReducer` |
+| Server data (fetch, cache, sync) | React Query / SWR |
+| Global app state (auth, theme) | Context or Zustand |
+
 ## Component Patterns
 
 ### Composition over Props
@@ -233,7 +325,7 @@ function List<T>({ items, renderItem, keyExtractor }: ListProps<T>) {
 }
 ```
 
-## Anti-Patterns to Avoid
+## Anti-Patterns
 
 - Don't mutate state directly
 - Don't call hooks conditionally or in loops

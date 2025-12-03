@@ -216,6 +216,123 @@ const buttonVariants = {
 <div aria-hidden="true" className="..." />   // Decorative, ignored
 ```
 
+## Layout Patterns
+
+### CSS Grid Layouts
+```tsx
+// 12-column grid
+<div className="grid grid-cols-12 gap-4">
+  <div className="col-span-8">Main content</div>
+  <div className="col-span-4">Sidebar</div>
+</div>
+
+// Auto-fit responsive grid
+<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
+  {items.map(item => <Card key={item.id} />)}
+</div>
+
+// Dashboard grid
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <StatCard />
+  <StatCard />
+  <StatCard />
+  <StatCard />
+</div>
+```
+
+### Sidebar Layout
+```tsx
+// Fixed sidebar + scrollable content
+<div className="flex h-screen">
+  <aside className="w-64 flex-shrink-0 border-r bg-gray-50 overflow-y-auto">
+    <nav className="p-4">{/* Nav items */}</nav>
+  </aside>
+  <main className="flex-1 overflow-y-auto p-6">
+    {/* Main content */}
+  </main>
+</div>
+
+// Collapsible sidebar
+<div className="flex h-screen">
+  <aside className={cn(
+    "flex-shrink-0 border-r bg-gray-50 transition-all duration-300",
+    isOpen ? "w-64" : "w-16"
+  )}>
+    {/* Sidebar content */}
+  </aside>
+  <main className="flex-1">{/* Content */}</main>
+</div>
+```
+
+### Form Layouts
+```tsx
+// Stacked form
+<form className="space-y-4 max-w-md">
+  <div>
+    <label className="block text-sm font-medium mb-1">Email</label>
+    <input className="w-full rounded-md border px-3 py-2" />
+  </div>
+  <div>
+    <label className="block text-sm font-medium mb-1">Password</label>
+    <input className="w-full rounded-md border px-3 py-2" type="password" />
+  </div>
+  <button className="w-full bg-blue-600 text-white rounded-md py-2">
+    Sign In
+  </button>
+</form>
+
+// Inline form (search bar)
+<form className="flex gap-2">
+  <input className="flex-1 rounded-md border px-3 py-2" placeholder="Search..." />
+  <button className="px-4 py-2 bg-blue-600 text-white rounded-md">Search</button>
+</form>
+
+// Two-column form
+<form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div>
+    <label className="block text-sm font-medium mb-1">First Name</label>
+    <input className="w-full rounded-md border px-3 py-2" />
+  </div>
+  <div>
+    <label className="block text-sm font-medium mb-1">Last Name</label>
+    <input className="w-full rounded-md border px-3 py-2" />
+  </div>
+  <div className="md:col-span-2">
+    <label className="block text-sm font-medium mb-1">Email</label>
+    <input className="w-full rounded-md border px-3 py-2" />
+  </div>
+</form>
+```
+
+### Header/Footer Layout
+```tsx
+// Sticky header + footer
+<div className="min-h-screen flex flex-col">
+  <header className="sticky top-0 z-50 border-b bg-white">
+    <nav className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
+      {/* Nav content */}
+    </nav>
+  </header>
+  <main className="flex-1">
+    {/* Page content */}
+  </main>
+  <footer className="border-t py-8">
+    {/* Footer content */}
+  </footer>
+</div>
+```
+
+### Centered Content
+```tsx
+// Horizontally centered with max-width
+<div className="mx-auto max-w-4xl px-4">{/* Content */}</div>
+
+// Vertically and horizontally centered
+<div className="min-h-screen flex items-center justify-center">
+  <div className="w-full max-w-md">{/* Centered card */}</div>
+</div>
+```
+
 ## Anti-Patterns
 
 - Don't use `@apply` excessively - defeats Tailwind's purpose

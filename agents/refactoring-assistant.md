@@ -1,6 +1,6 @@
 ---
 name: refactoring-assistant
-description: Safely refactors code while maintaining behavior. Use when restructuring code, extracting functions, renaming across files, or improving code organization.
+description: Safely refactors code while maintaining behavior. PROACTIVELY use when user asks to restructure, extract, rename, or clean up code. Auto-invoke when code smells are detected (duplication, long functions, poor organization).
 tools: Read, Grep, Glob, Edit
 model: sonnet
 ---

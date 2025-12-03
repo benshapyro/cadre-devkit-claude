@@ -1,25 +1,40 @@
 #!/usr/bin/env python3
 """
-Sensitive File Guard Hook
+Sensitive File Guard Hook (PreToolUse)
 Prevents access to sensitive files containing credentials or secrets.
+
+Exit Codes:
+  0 = Allow access
+  2 = Block access (PreToolUse convention)
+
+Debug: Set CLAUDE_HOOK_DEBUG=1 to enable verbose logging
 """
 import json
 import sys
 import os
 
+DEBUG = os.environ.get('CLAUDE_HOOK_DEBUG', '0') == '1'
+
+def debug(msg):
+    if DEBUG:
+        print(f"[sensitive-file-guard] {msg}", file=sys.stderr)
+
 try:
     data = json.load(sys.stdin)
 except json.JSONDecodeError:
+    debug("Malformed JSON input, allowing")
     sys.exit(0)  # Fail open on malformed input
 
 file_path = data.get('tool_input', {}).get('file_path', '')
 file_name = os.path.basename(file_path).lower()
 file_path_lower = file_path.lower()
+debug(f"Checking file: {file_path}")
 
 # ALLOW example/sample/template files - these don't contain real secrets
 safe_suffixes = ['.example', '.sample', '.template', '.dist']
 for suffix in safe_suffixes:
     if file_name.endswith(suffix):
+        debug(f"Allowing safe suffix: {suffix}")
         sys.exit(0)  # Allow these files
 
 # Exact filename matches (most restrictive)
@@ -42,6 +57,8 @@ sensitive_path_segments = [
     '.aws/credentials',
     '.ssh/config',
     '.ssh/known_hosts',
+    '.kube/config',
+    '.docker/config.json',
 ]
 
 # Block exact filename matches
@@ -73,10 +90,12 @@ for segment in sensitive_path_segments:
         sys.exit(2)
 
 # Block sensitive directories
-sensitive_dirs = ['.ssh/', '.aws/', '.gnupg/']
+sensitive_dirs = ['.ssh/', '.aws/', '.gnupg/', '.kube/', '.terraform/']
 for dir_pattern in sensitive_dirs:
     if dir_pattern in file_path_lower:
+        debug(f"Matched sensitive directory: {dir_pattern}")
         print(f"BLOCKED: File in sensitive directory: {file_path}", file=sys.stderr)
         sys.exit(2)
 
+debug("No sensitive patterns matched, allowing")
 sys.exit(0)

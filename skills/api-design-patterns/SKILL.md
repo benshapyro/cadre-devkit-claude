@@ -121,6 +121,112 @@ res.setHeader('Deprecation', 'true');
 res.setHeader('Sunset', 'Wed, 11 Nov 2025 11:11:11 GMT');
 ```
 
+## GraphQL Patterns
+
+### Schema Design
+```graphql
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  posts: [Post!]!  # Resolver handles N+1 with DataLoader
+  createdAt: DateTime!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  author: User!
+}
+
+type Query {
+  user(id: ID!): User
+  users(first: Int, after: String): UserConnection!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+  deleteUser(id: ID!): Boolean!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+}
+```
+
+### Resolver Patterns (Node.js)
+```typescript
+const resolvers = {
+  Query: {
+    user: async (_, { id }, { dataSources }) => {
+      return dataSources.usersAPI.getUser(id);
+    },
+    users: async (_, { first, after }, { dataSources }) => {
+      return dataSources.usersAPI.getUsers({ first, after });
+    },
+  },
+  Mutation: {
+    createUser: async (_, { input }, { dataSources }) => {
+      return dataSources.usersAPI.createUser(input);
+    },
+  },
+  User: {
+    // Field resolver with DataLoader to prevent N+1
+    posts: async (user, _, { loaders }) => {
+      return loaders.postsByUserId.load(user.id);
+    },
+  },
+};
+```
+
+### Error Handling
+```typescript
+// Throw typed errors
+import { GraphQLError } from 'graphql';
+
+throw new GraphQLError('User not found', {
+  extensions: {
+    code: 'NOT_FOUND',
+    http: { status: 404 },
+  },
+});
+
+// Common error codes
+// UNAUTHENTICATED, FORBIDDEN, NOT_FOUND, VALIDATION_ERROR, INTERNAL_ERROR
+```
+
+### Pagination (Relay Cursor-Based)
+```graphql
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+```
+
+### GraphQL vs REST - When to Use
+| Use GraphQL | Use REST |
+|-------------|----------|
+| Multiple clients with different data needs | Simple CRUD operations |
+| Deeply nested data in single request | Caching critical (HTTP caching) |
+| Rapid iteration, evolving schema | Public API with stability guarantees |
+| Mobile apps (minimize requests) | File uploads, streaming |
+
 ## Quick Reference
 
 ### Do

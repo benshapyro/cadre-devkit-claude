@@ -5,6 +5,12 @@ allowed-tools: Read, Grep, Glob, Bash(git:*)
 
 # Review Command
 
+**Purpose:** Qualitative code review - checks code quality, style, security, and best practices.
+
+**Distinct from /validate:** This command does human-like code review. Use `/validate` for automated checks (types, lint, tests, build).
+
+**Workflow:** `/review` → `/validate` → `/ship`
+
 Review current code changes against project standards.
 
 ## Gather Changes

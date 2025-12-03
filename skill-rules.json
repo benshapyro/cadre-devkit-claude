@@ -71,7 +71,11 @@
         "pathPatterns": [
           "**/.eslintrc*",
           "**/.prettierrc*",
-          "**/pyproject.toml"
+          "**/pyproject.toml",
+          "**/*.md",
+          "**/*.json",
+          "**/*.yaml",
+          "**/*.yml"
         ],
         "contentPatterns": []
       }
@@ -215,8 +219,17 @@
         ]
       },
       "fileTriggers": {
-        "pathPatterns": [],
-        "contentPatterns": []
+        "pathPatterns": [
+          "**/pages/**/*.tsx",
+          "**/app/**/*.tsx",
+          "**/components/**/index.tsx",
+          "**/components/**/page.tsx"
+        ],
+        "contentPatterns": [
+          "className.*hero",
+          "className.*landing",
+          "className.*dashboard"
+        ]
       }
     },
     "react-patterns": {
