@@ -107,6 +107,7 @@ These indicate hallucination - immediate failure:
 - `/plan [--tdd] [feature]` - Plan before implementing (--tdd for test-driven)
 - `/research [topic]` - Deep research with parallel sub-agents
 - `/review` - Qualitative code review
+- `/slop` - Remove AI-generated code slop (over-comments, defensive overkill, any casts)
 - `/validate` - Quantitative checks (types, lint, tests, build)
 - `/progress` - Save research findings as knowledge docs
 - `/ship` - Commit with proper formatting
