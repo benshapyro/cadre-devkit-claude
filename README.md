@@ -69,19 +69,22 @@ After installation, add hooks to your `~/.claude/settings.json`:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| **Commands** | 4 | `/plan`, `/review`, `/validate`, `/ship` |
-| **Skills** | 5 | API design, formatting, docs, errors, testing |
+| **Commands** | 7 | `/plan`, `/research`, `/review`, `/slop`, `/validate`, `/progress`, `/ship` |
+| **Skills** | 8 | API design, formatting, docs, errors, testing, React, Tailwind, frontend |
 | **Agents** | 7 | Code review, debugging, refactoring, and more |
 | **Hooks** | 5 | Security guards, auto-format, test runner, skill activation |
 
 ## Quick Start
 
 ```
-/plan add user authentication    # Plan the feature
-[implement with Claude's help]   # Build it
-/review                          # Review your code
-/validate                        # Run all checks
-/ship                           # Commit with proper format
+/research how to add authentication  # Research first (optional)
+/plan --tdd add user authentication  # Plan the feature (--tdd for test-driven)
+[implement with Claude's help]       # Build it
+/slop                                # Remove AI code slop
+/review                              # Review your code
+/validate                            # Run all checks
+/progress                            # Save learnings (optional)
+/ship                                # Commit with proper format
 ```
 
 ## Documentation
@@ -113,9 +116,12 @@ After installation, add hooks to your `~/.claude/settings.json`:
 ### Workflow Commands
 | Command | Purpose |
 |---------|---------|
-| `/plan [feature]` | Plan before implementing |
-| `/review` | Review code changes |
+| `/plan [--tdd] [feature]` | Plan before implementing (--tdd for test-driven) |
+| `/research [topic]` | Deep research with parallel sub-agents |
+| `/review` | Qualitative code review |
+| `/slop` | Remove AI-generated code slop |
 | `/validate` | Run type checks, lint, tests, build |
+| `/progress` | Save research findings as knowledge docs |
 | `/ship` | Create properly formatted commits |
 
 ### Skills (Auto-Activate)
