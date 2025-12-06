@@ -113,8 +113,10 @@ These indicate hallucination - immediate failure:
 - `/validate` - Quantitative checks (types, lint, tests, build)
 - `/progress` - Save research findings as knowledge docs
 - `/ship` - Commit with proper formatting
+- `/learn [question]` - Interactive help about Claude Code and the devkit
 
 ### Skills
+- **devkit-knowledge** - Architecture, commands, skills, hooks, workflows
 - **product-discovery** - MVP scoping and requirements discovery
 - **api-design-patterns** - REST/GraphQL best practices
 - **code-formatter** - Style guidelines

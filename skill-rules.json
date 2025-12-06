@@ -341,6 +341,41 @@
           "## MVP Scope"
         ]
       }
+    },
+    "devkit-knowledge": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "devkit",
+          "how does",
+          "what is",
+          "explain",
+          "teach me",
+          "learn about",
+          "help with",
+          "commands",
+          "skills",
+          "hooks",
+          "agents",
+          "workflow"
+        ],
+        "intentPatterns": [
+          "how.*work",
+          "what.*command",
+          "what.*skill",
+          "explain.*hook",
+          "teach.*me",
+          "learn.*about",
+          "how.*do.*i",
+          "show.*me"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [],
+        "contentPatterns": []
+      }
     }
   },
   "agents": {
