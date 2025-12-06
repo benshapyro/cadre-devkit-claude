@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "cadre-devkit-claude",
-      "source": ".",
+      "source": "./",
       "description": "Security hooks, workflow automation, and productivity tools for Claude Code"
     }
   ]
