@@ -1,3 +1,8 @@
+---
+name: frontend-design
+description: Create distinctive, memorable user interfaces that avoid generic AI aesthetics. Use when designing UI/UX, planning visual direction, or building pages and layouts.
+---
+
 # Frontend Design Skill
 
 Create distinctive, memorable user interfaces that avoid generic AI aesthetics.
@@ -71,3 +76,8 @@ This skill is framework-agnostic. Apply these principles whether using:
 - Plain HTML/CSS
 
 The goal is distinctive design, not specific implementation.
+
+---
+
+## Version
+- v1.0.0 (2025-12-05): Added YAML frontmatter, initial documented version

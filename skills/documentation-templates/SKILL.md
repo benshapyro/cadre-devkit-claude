@@ -1,6 +1,7 @@
 ---
 name: documentation-templates
-description: Generates README files, API documentation, and inline code comments following best practices. Use when creating project documentation or explaining complex code.
+description: Generates README files, API documentation, and inline code comments following best practices. Use when creating project documentation, writing READMEs, documenting APIs, or explaining complex code.
+allowed-tools: Read, Grep, Glob
 ---
 
 # Documentation Templates Skill
@@ -142,3 +143,9 @@ Use PostgreSQL as the primary database.
 ---
 
 Good documentation saves hours of debugging. Write for the developer who joins in 6 months.
+
+---
+
+## Version
+- v1.1.0 (2025-12-05): Added allowed-tools restriction, enriched trigger keywords
+- v1.0.0 (2025-11-15): Initial version

@@ -397,20 +397,26 @@ These aren't warnings. Exit code 2 = execution blocked.
 
 ### Skills (Context-Aware Guidance)
 
-Skills are specialized knowledge that auto-activates based on what you're working on.
+Skills are specialized knowledge that auto-activates based on what you're working on. All skills use YAML frontmatter with `name` and `description` fields for proper discovery.
 
 | Skill | Activates When | Provides |
 |-------|---------------|----------|
-| `devkit-knowledge` | Using `/learn`, asking "how" questions | Architecture, commands, workflows |
+| `devkit-knowledge` | Using `/learn`, asking "how" questions | Pointers to actual files (stays current) |
 | `product-discovery` | Using `/greenfield`, starting new projects | MVP scoping, requirements discovery |
-| `api-design-patterns` | Working in `/api/`, `/routes/` | REST conventions, GraphQL patterns, error formats |
-| `react-patterns` | Working with `.tsx`, `/components/` | Component patterns, hooks, state management |
-| `tailwind-conventions` | Working with Tailwind | Class organization, layout patterns |
-| `test-generator` | Working in `/tests/`, `*.test.*` | Jest/Pytest patterns, async testing |
-| `error-handler` | Implementing error handling | Try/catch patterns, error boundaries |
-| `code-formatter` | Any code file | Style guidelines, naming conventions |
-| `documentation-templates` | Creating docs | README structure, API docs format |
-| `frontend-design` | Working on pages/layouts | Hero sections, cards, dashboards |
+| `api-design-patterns` | Working in `/api/`, `/routes/`, pagination, auth | REST conventions, GraphQL patterns, error formats |
+| `react-patterns` | Working with `.tsx`, components, hooks, state | Component patterns, hooks, state management |
+| `tailwind-conventions` | Working with Tailwind, responsive, dark mode | Class organization, layout patterns |
+| `test-generator` | Tests, Jest, Pytest, fixtures, assertions | Jest/Pytest patterns, async testing |
+| `error-handler` | Implementing error handling, try/catch | Core patterns + reference files for TS/Python |
+| `code-formatter` | Formatting, linting, Prettier, Black, ESLint | Style guidelines, naming conventions |
+| `documentation-templates` | Creating docs, READMEs, API docs | README structure, API docs format |
+| `frontend-design` | UI/UX, pages, layouts, visual direction | Distinctive design principles |
+
+**Skill Architecture:**
+- Skills use **progressive disclosure** - only metadata loads initially, full content on-demand
+- `error-handler` splits detailed examples into `references/typescript-patterns.md` and `references/python-patterns.md`
+- `devkit-knowledge` references actual files instead of duplicating content (never goes stale)
+- Read-only skills (`code-formatter`, `documentation-templates`) have `allowed-tools: Read, Grep, Glob`
 
 ### Agents (Specialized Workers)
 

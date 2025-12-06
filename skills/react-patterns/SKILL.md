@@ -1,3 +1,8 @@
+---
+name: react-patterns
+description: Modern React patterns for TypeScript applications including hooks, state management, and component composition. Use when building React components, managing state, or implementing React best practices.
+---
+
 # React Patterns Skill
 
 Modern React patterns for TypeScript applications.
@@ -333,3 +338,8 @@ function List<T>({ items, renderItem, keyExtractor }: ListProps<T>) {
 - Don't fetch data in useEffect without cleanup/cancellation
 - Don't ignore dependency array warnings
 - Don't overuse context for frequently-changing values
+
+---
+
+## Version
+- v1.0.0 (2025-12-05): Added YAML frontmatter, initial documented version

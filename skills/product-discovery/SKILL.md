@@ -192,3 +192,8 @@ Transform vague ideas into actionable specifications through structured question
 - **Edge cases as teachers** - Unusual situations that clarify boundaries
 
 These specs become context for AI implementation - clarity here multiplies effectiveness later.
+
+---
+
+## Version
+- v1.0.0 (2025-12-05): Initial documented version

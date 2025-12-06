@@ -1,6 +1,6 @@
 ---
 name: test-generator
-description: Generates Jest or Pytest tests following Ben's testing standards. Use when creating tests, adding test coverage, or when user mentions testing, test cases, Jest, or Pytest.
+description: Generates Jest or Pytest tests following Ben's testing standards. Use when creating tests, adding test coverage, writing unit tests, mocking dependencies, or when user mentions testing, test cases, Jest, Pytest, fixtures, assertions, or coverage.
 ---
 
 # Test Generator Skill
@@ -290,3 +290,9 @@ When generating tests:
 7. Include setup/teardown if needed
 
 Always explain what each test validates and why it's important.
+
+---
+
+## Version
+- v1.1.0 (2025-12-05): Enriched trigger keywords in description
+- v1.0.0 (2025-11-15): Initial version

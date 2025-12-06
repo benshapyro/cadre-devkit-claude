@@ -1,6 +1,7 @@
 ---
 name: code-formatter
-description: Formats code according to Ben's style guidelines for TypeScript, Python, and general best practices. Use when formatting code, fixing linting issues, or when user mentions formatting, style, or linting.
+description: Formats code according to Ben's style guidelines for TypeScript, Python, and general best practices. Use when formatting code, fixing linting issues, checking naming conventions, organizing imports, or when user mentions formatting, style, linting, Prettier, Black, or ESLint.
+allowed-tools: Read, Grep, Glob
 ---
 
 # Code Formatter Skill
@@ -220,3 +221,9 @@ When formatting code:
 9. Verify consistent indentation
 
 Always provide a summary of changes made and reasoning for significant modifications.
+
+---
+
+## Version
+- v1.1.0 (2025-12-05): Added allowed-tools restriction, enriched trigger keywords
+- v1.0.0 (2025-11-15): Initial version

@@ -1,6 +1,6 @@
 ---
 name: api-design-patterns
-description: Provides REST and GraphQL API design patterns for Node.js, Flask, and FastAPI. Use when designing endpoints, request/response structures, or API architecture.
+description: Provides REST and GraphQL API design patterns for Node.js, Flask, and FastAPI. Use when designing endpoints, request/response structures, API architecture, pagination, authentication, rate limiting, or when working in /api/ or /routes/ directories.
 ---
 
 # API Design Patterns Skill
@@ -321,3 +321,9 @@ describe('GET /api/v1/users', () => {
 ---
 
 Good API design makes your API intuitive, consistent, and easy to use.
+
+---
+
+## Version
+- v1.1.0 (2025-12-05): Enriched trigger keywords in description
+- v1.0.0 (2025-11-15): Initial version

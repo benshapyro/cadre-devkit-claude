@@ -1,3 +1,8 @@
+---
+name: tailwind-conventions
+description: Consistent Tailwind CSS patterns for React/Next.js applications. Use when styling components with Tailwind, adding responsive design, implementing dark mode, or organizing utility classes.
+---
+
 # Tailwind CSS Conventions Skill
 
 Consistent patterns for Tailwind CSS in React/Next.js applications.
@@ -341,3 +346,8 @@ const buttonVariants = {
 - Don't inline complex conditional logic - extract to variables
 - Don't forget dark mode when adding colors
 - Don't use arbitrary values `[123px]` when scale values exist
+
+---
+
+## Version
+- v1.0.0 (2025-12-05): Added YAML frontmatter, initial documented version
