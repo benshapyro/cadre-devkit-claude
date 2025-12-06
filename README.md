@@ -31,19 +31,28 @@ You end up babysitting the AI instead of shipping code.
 This devkit adds a **quality and safety layer** to Claude Code:
 
 - **Hooks** that actually block dangerous commands (not just warnings)
-- **Structured workflow** from planning to shipping
+- **Structured workflow** from idea to shipping
 - **Evidence-based verification** (no more "it should work")
 - **Research-first pattern** (understand before implementing)
 - **Knowledge preservation** (learnings persist across sessions)
 - **Anti-slop tooling** (removes AI code smell)
+- **Interactive learning** (teach yourself about Claude Code)
 
 It's not a collection of prompts. It's an integrated system.
 
 ---
 
-## Quick Start
+## Installation
 
-### 1. Install
+### Option 1: Claude Code Marketplace (Recommended)
+
+```bash
+claude plugins install cadre-devkit-claude
+```
+
+This installs the devkit directly into your Claude Code environment.
+
+### Option 2: Git Clone
 
 ```bash
 git clone https://github.com/benshapyro/cadre-devkit-claude.git
@@ -51,7 +60,24 @@ cd cadre-devkit-claude
 ./install.sh
 ```
 
-### 2. Configure Hooks
+### Option 3: Manual Installation
+
+```bash
+# Clone
+git clone https://github.com/benshapyro/cadre-devkit-claude.git
+
+# Copy components
+cp -r cadre-devkit-claude/commands/* ~/.claude/commands/
+cp -r cadre-devkit-claude/skills/* ~/.claude/skills/
+cp -r cadre-devkit-claude/agents/* ~/.claude/agents/
+cp -r cadre-devkit-claude/hooks/* ~/.claude/hooks/
+
+# Make hooks executable
+chmod +x ~/.claude/hooks/**/*.py
+chmod +x ~/.claude/hooks/**/*.sh
+```
+
+### Configure Hooks
 
 Add to `~/.claude/settings.json`:
 
@@ -67,51 +93,114 @@ Add to `~/.claude/settings.json`:
         "matcher": "Edit|Write|Read",
         "hooks": [{ "type": "command", "command": "~/.claude/hooks/security/sensitive-file-guard.py" }]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/formatting/auto-format.py" },
+          { "type": "command", "command": "~/.claude/hooks/testing/test-on-change.py" }
+        ]
+      }
     ]
   }
 }
 ```
 
-### 3. Use It
+### Verify Installation
 
 ```bash
 claude
-> /plan add user authentication
+> /learn                    # Should show welcome message
+> /plan test feature        # Should work
+> Can you run rm -rf /      # Should be blocked by hook
 ```
-
-That's it. The devkit is now active.
 
 ---
 
 ## The Workflow
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  NEW PROJECT:                                                               │
+│  /greenfield ──→ SPEC.md + DESIGN.md + PLAN.md                              │
+│       │                                                                     │
+│       └──→ /plan [first feature] ──→ ...                                    │
+│                                                                             │
+│  EXISTING PROJECT:                                                          │
 │  /research ──→ /plan ──→ implement ──→ /slop ──→ /review ──→ /validate ──→ /ship
-│      │          │                        │         │          │        │
-│      │          │                        │         │          │        │
-│   Parallel    Read files              Remove    Qualitative  Tests,   Commit
-│   sub-agents  first,                  AI cruft  feedback     types,   with
-│   gather      --tdd for                         on design    lint,    proper
-│   context     test-first                                     build    message
-│                                                                       │
-│                                          /progress ◄─────────────────┘
-│                                          Save learnings
-│                                          for next time
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+│      │          │                        │         │          │        │    │
+│   Parallel    Read files              Remove    Qualitative  Tests,   Commit│
+│   sub-agents  first,                  AI cruft  feedback     types,         │
+│   gather      --tdd for                         on design    lint,          │
+│   context     test-first                                     build          │
+│                                                                             │
+│                                          /progress ◄────────────────────────┘
+│                                          Save learnings for next time       │
+│                                                                             │
+│  ISSUES:                                                                    │
+│  /backlog ──→ Document bugs/enhancements without implementing               │
+│                                                                             │
+│  HELP:                                                                      │
+│  /learn ──→ Interactive help about Claude Code and the devkit               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Not every step is required. Typical flows:
+Typical flows:
 
 - **Quick fix:** implement → `/validate` → `/ship`
 - **New feature:** `/plan` → implement → `/review` → `/validate` → `/ship`
 - **Complex feature:** `/research` → `/plan --tdd` → implement → `/slop` → `/review` → `/validate` → `/progress` → `/ship`
+- **New project:** `/greenfield` → `/plan [first feature]` → implement → ship
 
 ---
 
 ## Commands
+
+### `/greenfield [idea]`
+
+**Start a new project from scratch.**
+
+Don't jump into code. Discover what you're actually building first.
+
+```
+> /greenfield I want to build a tool that helps developers track learning progress
+```
+
+What happens:
+1. Interactive discovery through 6 phases (vision, problem, users, technical, validation, scoping)
+2. Uses Socratic questioning to uncover requirements you haven't thought of
+3. Creates three documents in `docs/`:
+   - `SPEC.md` - What to build (requirements, users, success criteria)
+   - `DESIGN.md` - How to build it (architecture, technology choices)
+   - `PLAN.md` - Implementation roadmap (phases, tasks)
+4. Suggests first feature to implement with `/plan`
+
+Why it matters: Most projects fail from unclear requirements, not bad code. This forces clarity before you write a single line.
+
+---
+
+### `/learn [question]`
+
+**Interactive help about Claude Code and the devkit.**
+
+```
+> /learn
+> /learn how do hooks work?
+> /learn what's the difference between /plan and /greenfield?
+> /learn what skills are available?
+```
+
+What happens:
+- No question: Shows welcome message with topic list
+- Devkit question: Reads actual files and explains
+- Claude Code question: Routes to official documentation
+
+Why it matters: Self-service onboarding. Learn the system without reading all the docs.
+
+---
 
 ### `/research [topic]`
 
@@ -157,6 +246,28 @@ With `--tdd`:
 - Converts requirements to test cases first
 - Plans test file creation before implementation
 - Follows red → green → refactor cycle
+
+---
+
+### `/backlog [bug|enh|ux] [description]`
+
+**Document issues without implementing them.**
+
+```
+> /backlog bug the login form doesn't validate email format
+> /backlog enh add dark mode support
+> /backlog ux the submit button is hard to find
+```
+
+What happens:
+1. Classifies as BUG, ENH (enhancement), or UX improvement
+2. Investigates codebase to find root cause / affected files
+3. Researches best practices (for enhancements)
+4. Takes screenshots (for UX issues, if Playwright available)
+5. Creates detailed entry in `BACKLOG.md`
+6. Asks for next item (interactive loop)
+
+Why it matters: Capture issues when you notice them. Implement later when you have time.
 
 ---
 
@@ -218,12 +329,13 @@ This is the "does this code work?" check.
 
 ---
 
-### `/progress`
+### `/progress [topic]`
 
 **Save learnings for next time.**
 
 ```
 > /progress
+> /progress authentication system
 ```
 
 After a research or exploration session, saves findings to `docs/YYYY-MM-DD-NNN-description.md`.
@@ -247,12 +359,13 @@ Why it matters: Next time you work on auth, Claude reads this instead of re-expl
 
 ---
 
-### `/ship`
+### `/ship [commit message]`
 
 **Commit with proper formatting.**
 
 ```
 > /ship
+> /ship feat: add rate limiting to API
 ```
 
 What happens:
@@ -288,6 +401,8 @@ Skills are specialized knowledge that auto-activates based on what you're workin
 
 | Skill | Activates When | Provides |
 |-------|---------------|----------|
+| `devkit-knowledge` | Using `/learn`, asking "how" questions | Architecture, commands, workflows |
+| `product-discovery` | Using `/greenfield`, starting new projects | MVP scoping, requirements discovery |
 | `api-design-patterns` | Working in `/api/`, `/routes/` | REST conventions, GraphQL patterns, error formats |
 | `react-patterns` | Working with `.tsx`, `/components/` | Component patterns, hooks, state management |
 | `tailwind-conventions` | Working with Tailwind | Class organization, layout patterns |
@@ -326,98 +441,6 @@ Two automated checks enforce quality:
 - Requires evidence for claims
 - "Tests pass" must show actual test output
 - Blocks phrases like "should work" or "probably fine"
-
----
-
-## Installation (Detailed)
-
-### Prerequisites
-
-- Claude Code installed ([installation guide](https://docs.anthropic.com/en/docs/claude-code))
-- Python 3.11+ (for hooks)
-- Node.js 20+ (for JS/TS projects)
-
-### Option 1: Install Script
-
-```bash
-git clone https://github.com/benshapyro/cadre-devkit-claude.git
-cd cadre-devkit-claude
-./install.sh
-```
-
-The script:
-1. Copies commands to `~/.claude/commands/`
-2. Copies skills to `~/.claude/skills/`
-3. Copies agents to `~/.claude/agents/`
-4. Copies hooks to `~/.claude/hooks/`
-5. Shows you what to add to `settings.json`
-
-### Option 2: Manual Installation
-
-```bash
-# Clone
-git clone https://github.com/benshapyro/cadre-devkit-claude.git
-
-# Copy components
-cp -r cadre-devkit-claude/commands/* ~/.claude/commands/
-cp -r cadre-devkit-claude/skills/* ~/.claude/skills/
-cp -r cadre-devkit-claude/agents/* ~/.claude/agents/
-cp -r cadre-devkit-claude/hooks/* ~/.claude/hooks/
-
-# Make hooks executable
-chmod +x ~/.claude/hooks/**/*.py
-chmod +x ~/.claude/hooks/**/*.sh
-```
-
-### Configure Hooks
-
-Add to `~/.claude/settings.json`:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/security/dangerous-command-blocker.py"
-          }
-        ]
-      },
-      {
-        "matcher": "Edit|Write|Read",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/security/sensitive-file-guard.py"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/formatting/auto-format.py"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-### Verify Installation
-
-```bash
-claude
-> /plan test feature   # Should work
-> Can you run rm -rf /  # Should be blocked by hook
-```
 
 ---
 
@@ -469,9 +492,30 @@ argument-hint: [optional args]
 Instructions for Claude when this command is invoked...
 ```
 
+### Can I add my own skills?
+
+Yes. Create a directory in `~/.claude/skills/my-skill/` with a `SKILL.md` file:
+
+```markdown
+---
+name: my-skill
+description: What this skill provides
+---
+
+# My Skill
+
+Knowledge and patterns for Claude to use...
+```
+
+Then add activation triggers to `skill-rules.json`.
+
 ### Where are knowledge docs saved?
 
 `/progress` saves to `docs/YYYY-MM-DD-NNN-description.md` in your project directory.
+
+### How do I get help?
+
+Run `/learn` for interactive help about the devkit and Claude Code.
 
 ---
 
@@ -479,8 +523,8 @@ Instructions for Claude when this command is invoked...
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| **Commands** | 7 | `/plan`, `/research`, `/review`, `/slop`, `/validate`, `/progress`, `/ship` |
-| **Skills** | 8 | API design, React, Tailwind, testing, errors, formatting, docs, frontend |
+| **Commands** | 10 | `/greenfield`, `/plan`, `/research`, `/backlog`, `/review`, `/slop`, `/validate`, `/progress`, `/ship`, `/learn` |
+| **Skills** | 10 | Product discovery, devkit knowledge, API design, React, Tailwind, testing, errors, formatting, docs, frontend |
 | **Agents** | 7 | Code review, debugging, research, git, refactoring, performance, specs |
 | **Hooks** | 4 | Dangerous command blocker, sensitive file guard, auto-format, test runner |
 
@@ -495,6 +539,8 @@ Instructions for Claude when this command is invoked...
 | [Customization](docs/customization.md) | How to modify and extend |
 | [Hook Development](docs/hook-development.md) | Creating custom hooks |
 | [FAQ](docs/faq.md) | Common questions |
+
+Or just run `/learn` for interactive help.
 
 ---
 
