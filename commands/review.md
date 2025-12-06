@@ -7,6 +7,11 @@ allowed-tools: Read, Grep, Glob, Bash(git:*)
 
 **Purpose:** Qualitative code review - checks code quality, style, security, and best practices.
 
+**Reference for standards:**
+- Style guidelines: Read `.claude/skills/code-formatter/SKILL.md`
+- Error patterns: Read `.claude/skills/error-handler/SKILL.md`
+- Test quality: Read `.claude/skills/test-generator/SKILL.md`
+
 **Distinct from /validate:** This command does human-like code review. Use `/validate` for automated checks (types, lint, tests, build).
 
 **Workflow:** `/review` → `/validate` → `/ship`

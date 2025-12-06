@@ -104,8 +104,10 @@ These indicate hallucination - immediate failure:
 - **Test-On-Change**: Runs related tests after source file changes
 
 ### Workflow Commands
+- `/greenfield [idea]` - Discover and specify a new project (creates SPEC.md, DESIGN.md, PLAN.md)
 - `/plan [--tdd] [feature]` - Plan before implementing (--tdd for test-driven)
 - `/research [topic]` - Deep research with parallel sub-agents
+- `/backlog [bug|enh|ux]` - Document bugs/improvements without implementing
 - `/review` - Qualitative code review
 - `/slop` - Remove AI-generated code slop (over-comments, defensive overkill, any casts)
 - `/validate` - Quantitative checks (types, lint, tests, build)
@@ -113,6 +115,7 @@ These indicate hallucination - immediate failure:
 - `/ship` - Commit with proper formatting
 
 ### Skills
+- **product-discovery** - MVP scoping and requirements discovery
 - **api-design-patterns** - REST/GraphQL best practices
 - **code-formatter** - Style guidelines
 - **documentation-templates** - README, API docs
@@ -137,6 +140,16 @@ Load detailed content on-demand with `@references/filename.md`:
 
 Skills and agents auto-activate based on your prompts. Use workflow commands for the development lifecycle:
 
+**New Project:**
+```
+/greenfield [your idea]
+→ Creates SPEC.md, DESIGN.md, PLAN.md in docs/
+/plan [first feature from spec]
+[implement]
+/review → /validate → /ship
+```
+
+**Existing Project:**
 ```
 /plan add user authentication
 [implement feature]

@@ -7,6 +7,15 @@ argument-hint: [--tdd] [feature description]
 
 Plan a new feature or task with proper structure before implementation.
 
+**Reference skills based on feature type:**
+- API/backend: Read `.claude/skills/api-design-patterns/SKILL.md`
+- React components: Read `.claude/skills/react-patterns/SKILL.md`
+- UI styling: Read `.claude/skills/tailwind-conventions/SKILL.md`
+- Error handling: Read `.claude/skills/error-handler/SKILL.md`
+- TDD mode: Read `.claude/skills/test-generator/SKILL.md`
+
+**For new projects:** Use `/greenfield` first to define specs, then `/plan` for implementation.
+
 ## Flags
 
 - `--tdd` - Enable Test-Driven Development mode (write tests first)

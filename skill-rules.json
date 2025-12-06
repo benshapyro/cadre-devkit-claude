@@ -302,6 +302,45 @@
           "dark:"
         ]
       }
+    },
+    "product-discovery": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": [
+          "new project",
+          "greenfield",
+          "from scratch",
+          "new idea",
+          "MVP",
+          "minimum viable",
+          "product spec",
+          "requirements discovery",
+          "what to build"
+        ],
+        "intentPatterns": [
+          "start.*new.*project",
+          "build.*from.*scratch",
+          "define.*mvp",
+          "figure.*out.*what",
+          "help.*me.*build",
+          "want.*to.*create"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "**/SPEC.md",
+          "**/DESIGN.md",
+          "**/docs/SPEC.md",
+          "**/docs/DESIGN.md"
+        ],
+        "contentPatterns": [
+          "## Problem Statement",
+          "## Target Users",
+          "## MVP Scope"
+        ]
+      }
     }
   },
   "agents": {
