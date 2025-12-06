@@ -442,6 +442,21 @@ Two automated checks enforce quality:
 - "Tests pass" must show actual test output
 - Blocks phrases like "should work" or "probably fine"
 
+### Reference Guides (Progressive Disclosure)
+
+The devkit uses a **hub-and-spoke architecture**. The main `CLAUDE.md` is a lean navigation hub (~140 lines) that links to detailed reference guides:
+
+| Reference | Content |
+|-----------|---------|
+| `style-guide.md` | Naming conventions, lint rules, TypeScript/Python specifics |
+| `testing-guide.md` | Jest/Pytest patterns, directory structure, mocking |
+| `environment.md` | Node.js, Python, Postgres setup |
+| `commands-reference.md` | Common dev commands |
+| `git-workflow.md` | Branching, commits, merge strategy |
+| `agent-patterns.md` | When to spawn sub-agents, parallel research |
+
+This keeps token usage low while providing deep knowledge on demand.
+
 ---
 
 ## FAQ
@@ -527,6 +542,7 @@ Run `/learn` for interactive help about the devkit and Claude Code.
 | **Skills** | 10 | Product discovery, devkit knowledge, API design, React, Tailwind, testing, errors, formatting, docs, frontend |
 | **Agents** | 7 | Code review, debugging, research, git, refactoring, performance, specs |
 | **Hooks** | 4 | Dangerous command blocker, sensitive file guard, auto-format, test runner |
+| **References** | 6 | Style guide, testing, environment, commands, git workflow, agent patterns |
 
 ---
 
