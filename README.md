@@ -44,15 +44,29 @@ It's not a collection of prompts. It's an integrated system.
 
 ## Installation
 
-### Option 1: Claude Code Marketplace (Recommended)
+### Option 1: Via Plugin System (Recommended)
+
+Start Claude Code:
 
 ```bash
-claude plugins install cadre-devkit-claude
+claude
 ```
 
-This installs the devkit directly into your Claude Code environment.
+Then inside Claude Code, add the marketplace and install the plugin:
 
-### Option 2: Git Clone
+```bash
+/plugin marketplace add github.com/benshapyro/cadre-devkit-claude
+/plugin install cadre-devkit-claude@cadre-devkit
+```
+
+For local development, use the file path:
+
+```bash
+/plugin marketplace add /Users/bshap/Projects/cadre-internal/devkits/cadre-devkit-claude
+/plugin install cadre-devkit-claude@cadre-devkit
+```
+
+### Option 2: Git Clone with Install Script
 
 ```bash
 git clone https://github.com/benshapyro/cadre-devkit-claude.git
@@ -109,12 +123,15 @@ Add to `~/.claude/settings.json`:
 
 ### Verify Installation
 
+After installing via plugin system, restart Claude Code to load the plugin. Then verify:
+
 ```bash
-claude
-> /learn                    # Should show welcome message
-> /plan test feature        # Should work
-> Can you run rm -rf /      # Should be blocked by hook
+/help                       # Should show /learn, /plan, /research, etc.
+/learn                      # Should show welcome message
+Can you run rm -rf /        # Should be blocked by security hook
 ```
+
+If you used the install script or manual installation, hooks are configured automatically in your `~/.claude/settings.json`.
 
 ---
 
