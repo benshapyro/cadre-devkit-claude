@@ -55,7 +55,7 @@ claude
 Then inside Claude Code, add the marketplace and install the plugin:
 
 ```bash
-/plugin marketplace add github.com/benshapyro/cadre-devkit-claude
+/plugin marketplace add benshapyro/cadre-devkit-claude
 /plugin install cadre-devkit-claude@cadre-devkit
 ```
 
