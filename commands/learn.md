@@ -7,7 +7,7 @@ argument-hint: [question or topic]
 
 Interactive help and teaching for Claude Code and the devkit.
 
-**Before answering:** Read `.claude/skills/devkit-knowledge/SKILL.md` for devkit architecture.
+**Before answering:** Use the devkit-knowledge skill for devkit architecture.
 
 ## Question Routing
 
@@ -16,11 +16,11 @@ Route the user's question to the appropriate source:
 | Question Type | Action |
 |---------------|--------|
 | Claude Code features | Use `claude-code-guide` subagent |
-| Devkit structure | Reference devkit-knowledge skill |
-| Specific command | Read `.claude/commands/{command}.md` |
-| Specific skill | Read `.claude/skills/{skill}/SKILL.md` |
-| Workflows | Reference devkit-knowledge skill |
-| Hooks | Read `.claude/hooks/` + devkit-knowledge |
+| Devkit structure | Use devkit-knowledge skill |
+| Specific command | Use Glob to find and read `**/commands/{command}.md` |
+| Specific skill | Activate the {skill} skill by name |
+| Workflows | Use devkit-knowledge skill |
+| Hooks | Use devkit-knowledge skill (includes all hook documentation) |
 | Troubleshooting | Combine sources as needed |
 
 ## Response Style
@@ -49,9 +49,9 @@ Route the user's question to the appropriate source:
 3. Show the standard workflow
 
 ### "How do I add a custom skill?"
-1. Create `.claude/skills/my-skill/SKILL.md`
+1. Create `skills/my-skill/SKILL.md` in your plugin or `~/.claude/skills/my-skill/SKILL.md` for personal use
 2. Add to `skill-rules.json` with triggers
-3. Reference from commands with explicit path
+3. Reference from commands by skill name (skill system handles paths)
 4. Show example structure
 
 ### "What can Claude Code do?"
@@ -61,17 +61,17 @@ Route the user's question to the appropriate source:
 
 ## Dynamic Discovery
 
-For questions about current setup, actually read the files:
+For questions about current setup:
 
 ```
 "What commands are available?"
-→ Read files in .claude/commands/ and list them
+→ Use Glob to find `**/commands/*.md` and list them
 
 "What skills do I have?"
-→ Read directories in .claude/skills/ and summarize
+→ List all registered skills from skill-rules.json knowledge
 
 "Show me the hooks"
-→ Read .claude/hooks/ structure and explain each
+→ Use devkit-knowledge skill (includes hook documentation)
 ```
 
 ## Teaching Mode
@@ -85,7 +85,7 @@ If user says "teach me about X" or "explain X":
 Example exercise suggestions:
 - "Try running `/plan --tdd add a hello endpoint` to see TDD mode"
 - "Run `/research [topic]` to see parallel sub-agents in action"
-- "Check `.claude/hooks/security/` to see how blocking works"
+- "Ask about hooks to learn how security blocking works"
 
 ## No Question Provided
 
