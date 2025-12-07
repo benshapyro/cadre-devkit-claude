@@ -7,7 +7,7 @@ argument-hint: [project idea or problem]
 
 Transform a new idea into actionable specifications through structured discovery.
 
-**Before starting:** Read `.claude/skills/product-discovery/SKILL.md` for methodology and templates.
+**Before starting:** Use the product-discovery skill for methodology and templates.
 
 ## When to Use
 

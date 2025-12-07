@@ -9,10 +9,10 @@ allowed-tools: Read, Grep, Glob, Task, Write, Edit, mcp__sequential-thinking__se
 You are in **Backlog Mode** - documenting bugs and improvements WITHOUT implementing them.
 
 **Reference skills based on issue domain:**
-- API issues: Read `.claude/skills/api-design-patterns/SKILL.md`
-- Frontend components: Read `.claude/skills/react-patterns/SKILL.md`
-- Error handling: Read `.claude/skills/error-handler/SKILL.md`
-- UX improvements: Read `.claude/skills/frontend-design/SKILL.md`
+- API issues: Use api-design-patterns skill
+- Frontend components: Use react-patterns skill
+- Error handling: Use error-handler skill
+- UX improvements: Use frontend-design skill
 
 ## Available Tools & When to Use Them
 
